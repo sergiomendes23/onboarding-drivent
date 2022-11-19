@@ -2,6 +2,7 @@ import { AuthenticatedRequest } from "@/middlewares";
 import { Response } from "express";
 import httpStatus from "http-status";
 import ticketSevice from "@/services/tickets-service";
+import { invalidDataError } from "@/errors";
 
 export async function getTypes(req: AuthenticatedRequest, res: Response) {
   try{
@@ -20,5 +21,22 @@ export async function getTicket(req: AuthenticatedRequest, res: Response) {
     return res.status(httpStatus.OK).send(ticket);
   }catch(error) {
     return res.sendStatus(httpStatus.NOT_FOUND);
+  }
+}
+
+export async function postTicket(req: AuthenticatedRequest, res: Response) {
+  const { ticketTypeId } = req.body;
+  const { userId } = req;
+
+  try{
+    const ticketData = await ticketSevice.postTicketService(userId, ticketTypeId);
+    return res.status(httpStatus.CREATED).send(ticketData);
+  }catch(error) {
+    if(error.name === "invalidDataError") {
+      return res.sendStatus(httpStatus.BAD_REQUEST);
+    }
+    if(error.name === "NotFoundError") {
+      return res.sendStatus(httpStatus.NOT_FOUND);
+    }
   }
 }
