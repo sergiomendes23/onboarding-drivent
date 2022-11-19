@@ -11,3 +11,14 @@ export async function getTypes(req: AuthenticatedRequest, res: Response) {
     return res.status(httpStatus.BAD_REQUEST);
   }
 }
+
+export async function getTicket(req: AuthenticatedRequest, res: Response) {
+  const { userId } = req;
+
+  try{
+    const ticket = await ticketSevice.getTickets(userId);
+    return res.status(httpStatus.OK).send(ticket);
+  }catch(error) {
+    return res.sendStatus(httpStatus.NOT_FOUND);
+  }
+}
