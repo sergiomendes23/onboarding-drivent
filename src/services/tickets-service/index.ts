@@ -3,7 +3,6 @@ import { TicketType } from "@/protocols";
 import enrollmentRepository from "@/repositories/enrollment-repository";
 import ticketRepository from "@/repositories/tickets-repository/index";
 import { Ticket } from "@prisma/client";
-import { number } from "joi";
 
 async function ticketTypes(): Promise<TicketType[]> {
   const ticket = await ticketRepository.getTypesTickets();
@@ -25,7 +24,7 @@ async function getTickets(userId: number) {
   return listTicket;
 }
 
-async function postTicketService(userId: number, ticketTypeId: number) {
+async function postTickets(userId: number, ticketTypeId: number) {
   if(!ticketTypeId) {
     throw invalidDataError;
   }
@@ -50,7 +49,7 @@ async function postTicketService(userId: number, ticketTypeId: number) {
 const ticketSevice = {
   ticketTypes,
   getTickets,
-  postTicketService
+  postTickets
 };
 
 export default ticketSevice;

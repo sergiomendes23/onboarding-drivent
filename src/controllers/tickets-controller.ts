@@ -28,7 +28,7 @@ export async function postTicket(req: AuthenticatedRequest, res: Response) {
   const { userId } = req;
 
   try{
-    const ticketData = await ticketSevice.postTicketService(userId, ticketTypeId);
+    const ticketData = await ticketSevice.postTickets(userId, ticketTypeId);
     return res.status(httpStatus.CREATED).send(ticketData);
   }catch(error) {
     if(error.name === "invalidDataError") {

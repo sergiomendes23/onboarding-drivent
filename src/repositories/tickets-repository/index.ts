@@ -12,8 +12,7 @@ function getTicketsInfo(enrollmentId: number) {
     },
     include: {
       TicketType: true,
-    }
-            
+    }       
   });
 }
 

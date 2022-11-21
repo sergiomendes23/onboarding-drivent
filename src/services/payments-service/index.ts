@@ -30,6 +30,7 @@ async function paymentsCreate(paymentsBody: BodyCard, userId: number) {
   if (!paymentsBody.ticketId) {
     throw invalidDataError;
   }
+  
   if (!paymentsBody.cardData) {
     throw invalidDataError;
   }
