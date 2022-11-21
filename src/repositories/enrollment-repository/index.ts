@@ -24,12 +24,22 @@ async function upsert(
   });
 }
 
+async function enrollmentByUserId(userId: number) {
+  const enrollmentUserId = await prisma.enrollment.findFirst({
+    where: {
+      userId,
+    }
+  });
+  return enrollmentUserId;
+}
+
 export type CreateEnrollmentParams = Omit<Enrollment, "id" | "createdAt" | "updatedAt">;
 export type UpdateEnrollmentParams = Omit<CreateEnrollmentParams, "userId">;
 
 const enrollmentRepository = {
   findWithAddressByUserId,
   upsert,
+  enrollmentByUserId
 };
 
 export default enrollmentRepository;

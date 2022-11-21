@@ -17,6 +17,14 @@ function getTicketsInfo(enrollmentId: number) {
   });
 }
 
+async function getTicketId(ticketId: number) {
+  return await prisma.ticket.findFirst({
+    where: {
+      id: ticketId,
+    }
+  });
+}
+
 function postTickets(newTicket: Omit<Ticket, "id" | "createdAt">) {
   return prisma.ticket.create({
     data: newTicket,
@@ -29,7 +37,8 @@ function postTickets(newTicket: Omit<Ticket, "id" | "createdAt">) {
 const ticketRepository = {
   getTypesTickets,
   getTicketsInfo,
-  postTickets
+  postTickets,
+  getTicketId
 };
 
 export default ticketRepository;

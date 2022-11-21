@@ -2,7 +2,6 @@ import { AuthenticatedRequest } from "@/middlewares";
 import { Response } from "express";
 import httpStatus from "http-status";
 import ticketSevice from "@/services/tickets-service";
-import { invalidDataError } from "@/errors";
 
 export async function getTypes(req: AuthenticatedRequest, res: Response) {
   try{
