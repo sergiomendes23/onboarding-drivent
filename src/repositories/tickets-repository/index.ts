@@ -34,11 +34,23 @@ function postTickets(newTicket: Omit<Ticket, "id" | "createdAt">) {
   });
 }
 
+function statusTicket(ticketId: number) {
+  return prisma.ticket.update({
+    where: {
+      id: ticketId,
+    },
+    data: {
+      status: "PAID",
+    }
+  });
+}
+
 const ticketRepository = {
   getTypesTickets,
   getTicketsInfo,
   postTickets,
-  getTicketId
+  getTicketId,
+  statusTicket
 };
 
 export default ticketRepository;
