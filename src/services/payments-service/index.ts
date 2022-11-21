@@ -1,4 +1,5 @@
 import { invalidDataError, notFoundError, unauthorizedError } from "@/errors";
+import { BodyCard } from "@/protocols";
 import enrollmentRepository from "@/repositories/enrollment-repository";
 import paymentsRepository from "@/repositories/payments-repository";
 import ticketRepository from "@/repositories/tickets-repository";
@@ -21,8 +22,7 @@ async function getPaymentsService(ticketId: number, userId: number) {
     throw unauthorizedError();
   }
 
-  const paymentsData = await paymentsRepository.getPaymentsList(ticketId);
-    
+  const paymentsData = await paymentsRepository.getPaymentsList(ticketId);    
   return paymentsData;
 }
 
@@ -30,7 +30,7 @@ async function paymentsCreate(paymentsBody: BodyCard, userId: number) {
   if (!paymentsBody.ticketId) {
     throw invalidDataError;
   }
-  
+
   if (!paymentsBody.cardData) {
     throw invalidDataError;
   }
@@ -50,7 +50,6 @@ async function paymentsCreate(paymentsBody: BodyCard, userId: number) {
   const ticketUse = await ticketRepository.getTicketsInfo(validEnrollments.id);
   const price = ticketUse.TicketType.price;
   const fourDigits = paymentsBody.cardData.number.toString().slice(-4);
-
   const paymentsData: Omit<Payment, "id" | "createdAt"> = {
     ticketId: paymentsBody.ticketId,
     value: price,
@@ -62,21 +61,7 @@ async function paymentsCreate(paymentsBody: BodyCard, userId: number) {
   await ticketRepository.statusTicket(validTicket.id);
 
   const paymentData = await paymentsRepository.postPaymentsCreate(paymentsData);
-
   return paymentData;
-}
-
-type BodyCard = {
-    ticketId: number,
-    cardData: CardData
-}
-
-type CardData = {
-    issuer: string,
-    number: number,
-    name: string,
-    expirationDate: Date,
-    cvv: number
 }
 
 const paymentsService = {

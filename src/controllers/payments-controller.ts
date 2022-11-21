@@ -20,7 +20,6 @@ export async function getPayments(req: AuthenticatedRequest, res: Response) {
     if(error.name === "UnauthorizedError") {
       return res.status(httpStatus.UNAUTHORIZED).send(error);
     }
-    return res.sendStatus(httpStatus.NO_CONTENT);
   }
 }
 
@@ -41,6 +40,5 @@ export async function postPayments(req: AuthenticatedRequest, res: Response) {
     if(error.name === "UnauthorizedError") {
       return res.status(httpStatus.UNAUTHORIZED).send(error);
     }
-    return res.sendStatus(httpStatus.NO_CONTENT);
   }
 }

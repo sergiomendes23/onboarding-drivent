@@ -39,3 +39,16 @@ export type TicketType = {
   createdAt: Date,
   updatedAt: Date,
 }
+
+export type BodyCard = {
+  ticketId: number,
+  cardData: CardData
+}
+
+type CardData = {
+  issuer: string,
+  number: number,
+  name: string,
+  expirationDate: Date,
+  cvv: number
+}
