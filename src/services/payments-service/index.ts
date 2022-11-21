@@ -25,8 +25,31 @@ async function getPaymentsService(ticketId: number, userId: number) {
   return paymentsData;
 }
 
+async function paymentsCreate(paymentsBody: BodyCard, userId: number) {
+  if (!paymentsBody.ticketId) {
+    throw invalidDataError;
+  }
+  if (!paymentsBody.cardData) {
+    throw invalidDataError;
+  }
+}
+
+type BodyCard = {
+    ticketId: number,
+    cardData: CardData
+}
+
+type CardData = {
+    inssuer: string,
+    number: number,
+    name: string,
+    expirationDate: Date,
+    cvv: number
+}
+
 const paymentsService = {
-  getPaymentsService
+  getPaymentsService,
+  paymentsCreate
 };
 
 export default paymentsService;

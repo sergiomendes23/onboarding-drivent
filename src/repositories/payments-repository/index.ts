@@ -1,4 +1,5 @@
 import { prisma } from "@/config";
+import { Payment } from "@prisma/client";
 
 function getPaymentsList(ticketId: number) {
   const paymentList = prisma.payment.findFirst({
@@ -9,8 +10,15 @@ function getPaymentsList(ticketId: number) {
   return paymentList;
 }
 
+function postPaymentsCreate(paymentData: Omit<Payment, "id" | "createdAt">) {
+  return prisma.payment.create({
+    data: paymentData,
+  });
+}
+
 const paymentsRepository = {
-  getPaymentsList
+  getPaymentsList,
+  postPaymentsCreate
 };
 
 export default paymentsRepository;
